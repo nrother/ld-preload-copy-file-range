@@ -14,6 +14,10 @@ This library overrides the libc implementation with its own version, which:
 - first tries the `copy_file_range` syscall
 - falls back to a regular `read()`/`write()` loop if the syscall fails with `EXDEV`
 
+> [!NOTE]
+> This override does not work if your application uses Boost::Filesystem to do the copy because Boost directly issues the syscall instead of going through libc.
+> A fallback similar to this was [added in Boost 1.77](https://github.com/boostorg/filesystem/commit/4b9052f1e0b2acf625e8247582f44acdcc78a4ce), though.
+
 ## Compiling and installation
 
 Run `make` to build the library.
